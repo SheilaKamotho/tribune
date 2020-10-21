@@ -1,5 +1,5 @@
 {%extends 'all-news/base.html'%}
-
+{% load bootstrap3 %}
 {% block content %}
 {{block.super}}
 
@@ -12,7 +12,11 @@
       <!-- displaying News articles -->
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <h2 class="text-center"> {{ news_item.title }} </h2>
-        <h6 class="text-center"> {{ news_item.post}} </h6>
+        <h6 class="text-center">
+         {% autoescape on %}
+          {{news_item.post| safe}}
+         {% endautoescape %} 
+        </h6>
     
       </div>
 
@@ -27,6 +31,16 @@
       <h2 class="text-center">There No News Items</h2>
     </div>
     {% endfor %}
+  
+  </div>
+  <div class="container-fluid">
+
+    <form  action="{%url 'newsToday'%}" method="post">
+      {%csrf_token%}
+  
+      {% bootstrap_form letterForm layout='inline' %}
+      <input type="submit" value="Subscribe">
+    </form>
   
   </div>
 
